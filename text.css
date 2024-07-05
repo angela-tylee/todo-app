@@ -1,0 +1,109 @@
+/* light / dark theme
+- body background-color
+- header img icon
+- .list color
+- .list background color
+ */
+
+body {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  background-color: var(--light-very-light-grayish-blue);
+}
+
+body, input, input::placeholder {
+  /* font-family: "Josefin Sans", sans-serif; */
+  color: var(--light-very-dark-grayish-blue);
+  /* font-size: 1rem; */
+}
+
+
+.list,
+.mobile-filter {
+  /* margin-top: 2em; */
+  box-shadow: 0 4px 20px var(--light-dark-grayish-blue);
+}
+
+.list,
+.input-field,
+input[type="text"],
+.mobile-filter {
+  background-color: var(--light-very-light-gray);
+  /* border-radius: 8px; */
+}
+
+.list-item {
+  /* padding: 1.5em; */
+  border-bottom: solid 1px var(--light-light-grayish-blue);
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+}
+  
+input[type="text"]::placeholder {
+  color: var(--light-dark-grayish-blue);
+}
+
+input[type='checkbox'] {
+  /* appearance: none;
+  width: 1.4rem;
+  height: 1.4rem; */
+  border: solid 1px var(--light-light-grayish-blue);
+  /* border-radius: 50%; */
+}
+
+input[type='checkbox']:checked + p {
+  /* text-decoration: line-through; */
+  color: var(--light-dark-grayish-blue);
+}
+
+.drag-n-drop {
+  /* padding: 4em;
+  text-align: center; */
+  color: var(--light-dark-grayish-blue);
+}
+
+/*  */
+
+body.light-theme {
+  background-color: var(--light-very-light-grayish-blue);
+  color: var(--light-very-dark-grayish-blue);
+  
+  input, input::placeholder {
+    color: var(--light-very-dark-grayish-blue);
+  }
+  
+  .list,
+  .mobile-filter {
+    box-shadow: 0 4px 20px var(--light-dark-grayish-blue);
+  }
+  
+  .list,
+  .input-field,
+  input[type="text"],
+  .mobile-filter {
+    background-color: var(--light-very-light-gray);
+  }
+  
+  .list-item {
+    border-bottom: solid 1px var(--light-light-grayish-blue);
+  }
+    
+  input[type="text"]::placeholder {
+    color: var(--light-dark-grayish-blue);
+  }
+  
+  input[type='checkbox'] {
+    border: solid 1px var(--light-light-grayish-blue);
+  }
+  
+  input[type='checkbox']:checked + p {
+    color: var(--light-dark-grayish-blue);
+  }
+  
+  .drag-n-drop {
+    color: var(--light-dark-grayish-blue);
+  }
+}
