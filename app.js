@@ -15,35 +15,19 @@ document.addEventListener('DOMContentLoaded',() => {
 });
 
 themeToggle.addEventListener('click', () => {
-    if (document.body.classList.contains('light-theme')) {
-        document.body.classList.replace('light-theme', 'dark-theme');
-        themeToggle.src = './images/icon-sun.svg'
-        localStorage.setItem('theme', 'dark');
-    } else {
-        document.body.classList.replace('dark-theme', 'light-theme');
-        themeToggle.src = './images/icon-moon.svg'
-        localStorage.setItem('theme', 'light');
-    }
+  if (document.body.classList.contains('light-theme')) {
+      document.body.classList.replace('light-theme', 'dark-theme');
+      themeToggle.src = './images/icon-sun.svg'
+      localStorage.setItem('theme', 'dark');
+  } else {
+      document.body.classList.replace('dark-theme', 'light-theme');
+      themeToggle.src = './images/icon-moon.svg'
+      localStorage.setItem('theme', 'light');
+  }
 });
 
 
-// count left items
-
-const listItems = document.querySelectorAll('#list-item');
-// const leftItems = document.querySelectorAll('#item-left');
-// let countLeft = 0;
-
-// listItems.forEach(() => {
-//   countLeft++;
-// })
-
-// console.log(countLeft);
-// leftItems.textContent = countLeft;
-
-// console.log(leftItems.textContent);
-
 // add task
-
 const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.querySelector('#list-items');
@@ -64,10 +48,10 @@ taskForm.addEventListener('submit', (e) => {
 
 function addTask(text, completed){
   taskList.innerHTML += `
-  <div class="list-item" id="list-item">
+  <div class="list-item" id="list-item" draggable="true">
     <div class="input-container">
       <input type="checkbox" ${completed ? 'checked' : ''} id="checkbox">
-      <p>${text}</p>
+        <p>${text}</p>
     </div>
     <div class="delete-btn-container">
       <img class="delete-btn" id="delete-btn" src="./images/icon-cross.svg" alt="">
@@ -76,10 +60,13 @@ function addTask(text, completed){
   `
 }
 
+// count left items
 function countItems() {
   itemLeft.textContent = taskList.querySelectorAll('#list-item').length;
 }
 
+
+// save tasks to local storage
 function saveTasks() {
   const tasks = [];
   taskList.querySelectorAll('#list-item').forEach(item => {
@@ -101,7 +88,6 @@ function loadTasks() {
 loadTasks();
 
 // delete task
-
 const deleteBtns = document.querySelectorAll('#delete-btn');
 
 deleteBtns.forEach( btn => {
@@ -124,31 +110,38 @@ toggleChecks.forEach ( toggle => {
 })
 
 
-// clear completed
-
-
 // filter category
+const allFilters = document.querySelectorAll('#filter-all');
+const activeFilters = document.querySelectorAll('#filter-active');
+const completedFilters = document.querySelectorAll('#filter-completed');
 
-const allFilter = document.getElementById('filter-all');
-const activeFilter = document.getElementById('filter-active');
-const completedFilter = document.getElementById('filter-completed');
+allFilters.forEach((allFilter) => {
+  allFilter.addEventListener('click', function() {
+    setFilter('all');
+    allFilter.classList.add('selected');
+  });
+})
 
-allFilter.addEventListener('click', function() {
-  setFilter('all');
-});
+activeFilters.forEach((activeFilter) => {
+  activeFilter.addEventListener('click', function() {
+    setFilter('active');
+    activeFilter.classList.add('selected');
+  });
+})
 
-activeFilter.addEventListener('click', function() {
-  setFilter('active');
-});
-
-completedFilter.addEventListener('click', function() {
-  setFilter('completed');
-});
+completedFilters.forEach((completedFilter) => {
+  completedFilter.addEventListener('click', function() {
+    setFilter('completed');
+    completedFilter.classList.add('selected');
+  });
+})
 
 function setFilter(filter) {
-  listItems.forEach(item => {
+  resetStyle();
+  taskList.querySelectorAll('#list-item').forEach(item => {
     if (filter === 'all') {
       item.style.display = 'flex';
+      
     } else if (filter === 'active') {
       if (item.querySelector('input[type="checkbox"]').checked) {
         item.style.display = 'none';
@@ -164,21 +157,86 @@ function setFilter(filter) {
     }
   });
 
-  document.querySelectorAll('.filter ul li').forEach(li => {
-    li.classList.remove('selected');
-  });
-
-  if (filter === 'all') {
-    allFilter.classList.add('selected');
-  } else if (filter === 'active') {
-    activeFilter.classList.add('selected');
-  } else if (filter === 'completed') {
-    completedFilter.classList.add('selected');
+  function resetStyle() {
+    document.querySelectorAll('.filter ul li').forEach(li => {
+      li.classList.remove('selected');
+    });
+    document.querySelectorAll('.mobile-filter ul li').forEach(li => {
+      li.classList.remove('selected');
+    });
   }
 }
 
 setFilter('all');   // Initialize with all filter
 
-// switch desktop / mobile filter
+// clear completed
+const clearBtn = document.querySelector('#clear-completed');
+
+clearBtn.addEventListener('click', () => {
+  taskList.querySelectorAll('.list-item').forEach(item => {
+    if (item.querySelector('input[type="checkbox"]').checked) {
+      item.remove();
+    }
+  })
+  saveTasks();
+})
+
 
 // drag n drop
+let draggedItem = null;
+let placeholder = document.createElement('div');
+placeholder.classList.add('list-item', 'placeholder');
+
+taskList.querySelectorAll('#list-item').forEach(item => {
+    item.addEventListener('dragstart', dragStart);
+    item.addEventListener('dragend', dragEnd);
+    item.addEventListener('dragover', dragOver);
+    item.addEventListener('dragenter', dragEnter);
+    item.addEventListener('dragleave', dragLeave);
+    item.addEventListener('drop', drop);
+});
+
+function allowDrop(e) {
+  e.preventDefault();
+}
+
+function dragStart(e) {
+    draggedItem = this;
+    setTimeout(() => {
+        this.classList.add('dragging');
+        this.style.display = 'none'; // Hide the dragged item
+    }, 0);
+}
+
+function dragEnd(e) {
+    this.classList.remove('dragging');
+    this.style.display = 'flex'; // Show the dragged item
+    placeholder.remove();
+    draggedItem = null;
+}
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+function dragEnter(e) {
+    e.preventDefault();
+    if (this !== draggedItem) {
+      const rect = this.getBoundingClientRect();
+      const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+      taskList.insertBefore(placeholder, this.nextSibling);
+      taskList.insertBefore(placeholder, next && this.nextSibling || this);
+    }
+}
+
+function dragLeave(e) {
+    e.preventDefault();
+}
+
+function drop(e) {
+    e.preventDefault();
+    if (draggedItem) {
+      taskList.insertBefore(draggedItem, placeholder);
+        placeholder.remove();
+    }
+}
