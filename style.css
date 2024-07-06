@@ -54,7 +54,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   /* background-color: var(--light-very-light-grayish-blue); */
 }
@@ -97,6 +97,7 @@ body, input, input::placeholder {
 .container {
   width: 40%;
   margin: 0 auto;
+  margin-top: 8em;
   z-index: 1;
 }
 
@@ -191,6 +192,15 @@ input[type='checkbox']:checked {
 input[type='checkbox']:checked + p {
   text-decoration: line-through;
   /* color: var(--light-dark-grayish-blue); */
+}
+
+.delete-btn {
+  transition: transform 1s;
+}
+
+.delete-btn:hover {
+  cursor: pointer;
+  transform: rotate(360deg) scale(1.2);
 }
 
 .list-total,
@@ -297,7 +307,7 @@ body.dark-theme {
   
   .list,
   .mobile-filter {
-    box-shadow: 0 4px 20px var(--dark-very-dark-blue);
+    box-shadow: 0 4px 20px black;
   }
   
   .list,
@@ -329,4 +339,16 @@ body.dark-theme {
   .drag-n-drop {
     color: var(--dark-very-dark-grayish-blue-1);
   }
+}
+
+/* filter category */
+.filter ul li {
+  cursor: pointer;
+  /* display: inline-block; */
+  /* margin-right: 10px; */
+}
+
+.filter ul li.selected {
+  color: var(--bright-blue);
+  font-weight: bold;
 }
