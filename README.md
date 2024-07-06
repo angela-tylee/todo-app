@@ -34,10 +34,17 @@ Users should be able to:
 
 ### Screenshot
 
+<img width="1411" alt="image" src="https://github.com/angela-tylee/todo-app/assets/145020731/90412e27-5472-4702-859d-0c6794db872d">
+<img width="1402" alt="image" src="https://github.com/angela-tylee/todo-app/assets/145020731/367f50b4-b178-4587-967f-55e95d48678b">
+
+<img width="366" alt="image" src="https://github.com/angela-tylee/todo-app/assets/145020731/0edc4c43-c2f5-4603-8849-f242107095f8">
+<img width="364" alt="image" src="https://github.com/angela-tylee/todo-app/assets/145020731/a7f345a3-8ebe-4ecc-bd71-aaf1becf9242">
+
+
 ### Links
 
-- Solution URL:
-- Live Site URL:
+- Solution URL: https://github.com/angela-tylee/todo-app
+- Live Site URL: https://angela-tylee.github.io/todo-app/
 
 ## My process
 
