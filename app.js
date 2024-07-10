@@ -66,7 +66,7 @@ function countItems() {
 }
 
 
-// save tasks to local storage
+// store tasks to local storage
 function saveTasks() {
   const tasks = [];
   taskList.querySelectorAll('#list-item').forEach(item => {
@@ -98,7 +98,7 @@ deleteBtns.forEach( btn => {
   })
 })
 
-// check task
+// toggle task
 const toggleChecks = document.querySelectorAll('#checkbox');
 
 toggleChecks.forEach ( toggle => {
